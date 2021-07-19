@@ -34,7 +34,7 @@ pipeline{
             steps {
                 script {
 
-                def NexusRepo = Version.endsWith("SNAPSHOT") ? "DevopsLab-SnapShot" : "DevopsLab-Release"
+                // def NexusRepo = Version.endsWith("SNAPSHOT") ? "DevopsLab-SnapShot" : "DevopsLab-Release"
 
                 nexusArtifactUploader artifacts:
                 [[artifactId: "${ArtifactId}",
@@ -46,7 +46,7 @@ pipeline{
                 nexusUrl: '54.152.224.32:8081',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
-                repository: "${NexusRepo}",
+                repository: 'DevopsLab-SnapShot',
                 version: "${Version}"
              }
             }
