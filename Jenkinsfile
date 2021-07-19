@@ -46,7 +46,7 @@ pipeline{
                 nexusUrl: '54.152.224.32:8081',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
-                repository: 'DevopsLab-SnapShot',
+                repository: "${NexusRepo}",
                 version: "${Version}"
              }
             }
