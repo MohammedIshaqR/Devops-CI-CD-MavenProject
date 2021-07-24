@@ -62,7 +62,7 @@ pipeline{
                     }
                 }
 
-        // Stage3 : Deploying
+        // Stage5 : Deploying Build Artifact to Tomcat
         stage ('Deploy to Tomcat'){
             steps {
                 echo "Deploying ...."
@@ -73,6 +73,27 @@ pipeline{
                         sshTransfer(
                                 cleanRemote:false,
                                 execCommand: 'ansible-playbook /home/ansibleadmin/playbook/downloadanddepploy.yaml -i /home/ansibleadmin/playbook/hosts',
+                                execTimeout: 120000
+                        )
+                    ],
+                    usePromotionTimestamp: false,
+                    useWorkspaceInPromotion: false,
+                    verbose: false)
+                    ])
+            }
+        }
+
+        // Stage6 : Deploying Build Artifact to Docker
+        stage ('Deploy to Docker'){
+            steps {
+                echo "Deploying ...."
+                sshPublisher(publishers:
+                [sshPublisherDesc(
+                    configName: 'Ansible_Controller',
+                    transfers: [
+                        sshTransfer(
+                                cleanRemote:false,
+                                execCommand: 'ansible-playbook /home/ansibleadmin/playbook/download-deploy-on-docker.yaml -i /home/ansibleadmin/playbook/hosts',
                                 execTimeout: 120000
                         )
                     ],
