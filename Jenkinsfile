@@ -103,6 +103,14 @@ pipeline{
                     ])
             }
         }
-    }
 
+          // Stage7 : Publish the source code to Sonarqube
+          stage ('Publish SC to Sonarqube Analysis'){
+              steps {
+                  echo ' Source code published to Sonarqube for SCA......'
+                  withSonarQubeEnv('SonarQube'){ // You can override the credential to be used
+                    sh 'mvn sonar:sonar'
+                  }
+          }
+    }
 }
